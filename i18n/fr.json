@@ -1,0 +1,246 @@
+{
+  "welcome": {
+    "tagline": "Trouve ton partenaire. Joue. Progresse.",
+    "login": "Se connecter",
+    "register": "Créer un compte"
+  },
+  "login": {
+    "title": "Connexion",
+    "email": "Email",
+    "password": "Mot de passe",
+    "submit": "Se connecter",
+    "forgotPassword": "Mot de passe oublié ?",
+    "noAccount": "Pas encore de compte ?",
+    "signUp": "S'inscrire"
+  },
+  "forgotPassword": {
+    "back": "← Retour",
+    "title": "Mot de passe oublié",
+    "subtitle": "Saisis ton email pour recevoir un lien de réinitialisation.",
+    "success": "Email envoyé ! Vérifie ta boîte mail.",
+    "email": "Email",
+    "submit": "Envoyer le lien"
+  },
+  "registerMethod": {
+    "title": "Créer un compte",
+    "continueWithEmail": "Continuer avec email",
+    "alreadyAccount": "Déjà un compte ?",
+    "login": "Se connecter"
+  },
+  "registerType": {
+    "title": "Quel est ton profil ?",
+    "subtitle": "Ce choix détermine ton expérience sur Ace.",
+    "playerTitle": "Je suis un joueur",
+    "playerDesc": "Profil personnel · Tennis / Padel · Recherche partenaires",
+    "clubTitle": "Je représente un club",
+    "clubDesc": "Page officielle · Gérer courts & membres · Publier des annonces"
+  },
+  "playerCredentials": {
+    "title": "Infos de connexion",
+    "subtitle": "Ces informations sont privées.",
+    "email": "Email *",
+    "password": "Mot de passe *",
+    "confirm": "Confirmer le mot de passe *",
+    "passwordPlaceholder": "8 caractères minimum",
+    "next": "Suivant",
+    "errors": {
+      "emailRequired": "Email requis",
+      "emailInvalid": "Email invalide",
+      "passwordRequired": "Mot de passe requis",
+      "passwordMin": "8 caractères minimum",
+      "passwordMismatch": "Les mots de passe ne correspondent pas"
+    }
+  },
+  "playerProfile": {
+    "title": "Ton profil",
+    "subtitle": "Ces informations seront visibles par les autres joueurs.",
+    "addPhoto": "Ajouter une photo",
+    "changePhoto": "Changer la photo",
+    "firstName": "Prénom *",
+    "lastName": "Nom *",
+    "username": "Nom d'utilisateur *",
+    "city": "Ville *",
+    "next": "Suivant",
+    "errors": {
+      "firstNameRequired": "Prénom requis",
+      "lastNameRequired": "Nom requis",
+      "usernameRequired": "Nom d'utilisateur requis",
+      "usernameInvalid": "3-20 caractères, lettres minuscules, chiffres ou _",
+      "cityRequired": "Ville requise"
+    }
+  },
+  "playerSports": {
+    "title": "Sports pratiqués",
+    "subtitle": "Au moins 1 sport obligatoire.",
+    "next": "Suivant",
+    "errors": {
+      "noSport": "Sélectionne au moins un sport.",
+      "noLevel": "Sélectionne ton niveau en {sport}."
+    }
+  },
+  "playerPreferences": {
+    "title": "Préférences",
+    "subtitle": "Optionnel — tu peux modifier ça plus tard.",
+    "favoriteSurface": "Surface favorite",
+    "availability": "Disponibilités habituelles",
+    "finish": "Terminer l'inscription",
+    "skip": "Passer cette étape",
+    "surfaces": {
+      "clay": "Terre battue",
+      "hard": "Dur",
+      "grass": "Gazon",
+      "indoor": "Indoor"
+    },
+    "days": {
+      "mon": "Lun",
+      "tue": "Mar",
+      "wed": "Mer",
+      "thu": "Jeu",
+      "fri": "Ven",
+      "sat": "Sam",
+      "sun": "Dim"
+    }
+  },
+  "clubCredentials": {
+    "title": "Infos de connexion",
+    "subtitle": "Email officiel du club.",
+    "email": "Email du club *",
+    "password": "Mot de passe *",
+    "confirm": "Confirmer le mot de passe *",
+    "passwordPlaceholder": "8 caractères minimum",
+    "next": "Suivant",
+    "errors": {
+      "emailRequired": "Email requis",
+      "emailInvalid": "Email invalide",
+      "passwordRequired": "Mot de passe requis",
+      "passwordMin": "8 caractères minimum",
+      "passwordMismatch": "Les mots de passe ne correspondent pas"
+    }
+  },
+  "clubIdentity": {
+    "title": "Identité du club",
+    "subtitle": "Ces infos seront visibles sur votre page publique.",
+    "clubName": "Nom du club *",
+    "logo": "Logo du club *",
+    "addLogo": "Ajouter le logo",
+    "cover": "Photo de couverture (optionnel)",
+    "addCover": "Ajouter une photo de couverture",
+    "next": "Suivant",
+    "errors": {
+      "clubNameRequired": "Nom du club requis",
+      "logoRequired": "Logo obligatoire"
+    }
+  },
+  "clubLocation": {
+    "title": "Localisation",
+    "subtitle": "Pour que les joueurs puissent vous trouver.",
+    "address": "Adresse *",
+    "postalCode": "Code postal *",
+    "city": "Ville *",
+    "phone": "Téléphone",
+    "website": "Site web",
+    "next": "Suivant",
+    "errors": {
+      "addressRequired": "Adresse requise",
+      "postalCodeRequired": "Code postal requis",
+      "cityRequired": "Ville requise"
+    }
+  },
+  "clubSports": {
+    "title": "Sports & courts",
+    "subtitle": "Sélectionne les sports proposés par le club.",
+    "tennisCourts": "Courts de tennis",
+    "padelCourts": "Courts de padel",
+    "courtsCount": "Nombre de courts",
+    "availableSurfaces": "Surfaces disponibles",
+    "next": "Suivant",
+    "errors": {
+      "noSport": "Sélectionne au moins un sport."
+    },
+    "surfaces": {
+      "clay": "Terre battue",
+      "hard": "Dur",
+      "grass": "Gazon",
+      "indoor": "Indoor",
+      "grass_synthetic": "Gazon synthétique"
+    }
+  },
+  "clubPresentation": {
+    "title": "Présentation",
+    "subtitle": "Optionnel — modifiable à tout moment.",
+    "description": "Description du club",
+    "descriptionPlaceholder": "Présentez votre club en quelques mots...",
+    "openingHours": "Horaires d'ouverture",
+    "finish": "Créer la page du club",
+    "skip": "Passer cette étape",
+    "days": {
+      "mon": "Lun",
+      "tue": "Mar",
+      "wed": "Mer",
+      "thu": "Jeu",
+      "fri": "Ven",
+      "sat": "Sam",
+      "sun": "Dim"
+    }
+  },
+  "feed": {
+    "title": "Feed",
+    "emptyTitle": "Aucun post pour l'instant",
+    "emptySubtitle": "Sois le premier à publier un score ou un message !"
+  },
+  "feedFilter": {
+    "all": "Tous"
+  },
+  "post": {
+    "title": "Nouveau post",
+    "sport": "Sport",
+    "sets": "Score",
+    "addSet": "Ajouter un set",
+    "addPhoto": "Ajouter une photo",
+    "addScore": "Ajouter un score",
+    "messagePlaceholder": "Partage ton actualité tennis / padel…",
+    "publish": "Publier",
+    "editTitle": "Modifier le post",
+    "save": "Enregistrer",
+    "emptyError": "Le post ne peut pas être vide."
+  },
+  "profile": {
+    "player": "Joueur",
+    "club": "Club",
+    "signOut": "Se déconnecter",
+    "language": "Langue",
+    "postsSport": "Posts {sport}"
+  },
+  "tabs": {
+    "feed": "Feed",
+    "news": "Actualités",
+    "publish": "Publier",
+    "profile": "Profil"
+  },
+  "feedPost": {
+    "justNow": "À l'instant",
+    "bravo": "Bravo",
+    "min": "min",
+    "hour": "h",
+    "day": "j",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "deleteTitle": "Supprimer ce post ?",
+    "deleteMessage": "Cette action est irréversible.",
+    "deleteConfirm": "Supprimer"
+  },
+  "sportSelector": {
+    "tennisLevel": "Niveau FFT",
+    "padelLevel": "Niveau"
+  },
+  "publicProfile": {
+    "notFound": "Utilisateur introuvable"
+  },
+  "common": {
+    "genericError": "Une erreur est survenue.",
+    "authError": "Erreur d'authentification.",
+    "tennis": "🎾 Tennis",
+    "padel": "🏓 Padel",
+    "cancel": "Annuler"
+  }
+}
