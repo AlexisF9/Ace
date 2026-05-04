@@ -1,13 +1,24 @@
 import { View, Text } from "react-native";
 import { Sport } from "../../types";
 
-interface SportTagProps {
+interface SportEntry {
   sport: Sport;
-  size?: "sm" | "md";
   level?: string;
 }
 
-export function SportTag({ sport, size = "sm", level }: SportTagProps) {
+interface SportTagProps {
+  entries: SportEntry[];
+  size?: "sm" | "md";
+}
+
+export function SportTag({ entries, size = "sm" }: SportTagProps) {
+  const label = entries
+    .map(
+      (e) =>
+        `${e.sport === "tennis" ? "Tennis" : "Padel"}${e.level ? ` ${e.level}` : ""}`,
+    )
+    .join(" / ");
+
   return (
     <View
       className={`rounded-pill border border-orange items-center justify-center ${
@@ -19,7 +30,7 @@ export function SportTag({ sport, size = "sm", level }: SportTagProps) {
           size === "sm" ? "text-[10px]" : "text-xs"
         }`}
       >
-        {sport === "tennis" ? "Tennis" : "Padel"} {level && `- ${level}`}
+        {label}
       </Text>
     </View>
   );

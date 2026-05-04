@@ -1,5 +1,5 @@
 import { View, Text } from "react-native";
-import { Match, Sport } from "../../types";
+import { Match } from "../../types";
 
 const SURFACE_LABEL: Record<string, string> = {
   clay: "Terre battue",
@@ -10,10 +10,9 @@ const SURFACE_LABEL: Record<string, string> = {
 
 interface ScorePostProps {
   match: Match;
-  sport: Sport;
 }
 
-export function ScorePost({ match, sport }: ScorePostProps) {
+export function ScorePost({ match }: ScorePostProps) {
   const scoreStr = match.score.sets.map((s) => `${s.p1} – ${s.p2}`).join("  ");
 
   return (

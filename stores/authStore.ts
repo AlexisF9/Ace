@@ -1,8 +1,33 @@
 import { create } from "zustand";
-import { Session } from "@supabase/supabase-js";
+import { Session, RealtimeChannel } from "@supabase/supabase-js";
 import { supabase } from "../lib/supabase";
 import { Profile } from "../types";
 import { useSportsStore } from "./sportsStore";
+
+let accountChannel: RealtimeChannel | null = null;
+
+function subscribeAccountDeletion(userId: string, onDeleted: () => void) {
+  if (accountChannel) {
+    supabase.removeChannel(accountChannel);
+    accountChannel = null;
+  }
+  accountChannel = supabase
+    .channel(`account-watch:${userId}`)
+    .on("postgres_changes", {
+      event: "DELETE",
+      schema: "public",
+      table: "accounts",
+      filter: `id=eq.${userId}`,
+    }, onDeleted)
+    .subscribe();
+}
+
+function unsubscribeAccountDeletion() {
+  if (accountChannel) {
+    supabase.removeChannel(accountChannel);
+    accountChannel = null;
+  }
+}
 
 interface AuthState {
   session: Session | null;
@@ -36,13 +61,17 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     // pour éviter un flash vers register/type au démarrage
     if (session) {
       await get().refreshProfile();
+      subscribeAccountDeletion(session.user.id, () => get().signOut());
     }
 
     set({ session, isLoading: false });
 
     supabase.auth.onAuthStateChange((_event, session) => {
       set({ session });
-      if (!session) {
+      if (session) {
+        subscribeAccountDeletion(session.user.id, () => get().signOut());
+      } else {
+        unsubscribeAccountDeletion();
         set({ profile: null, isProfileComplete: false });
       }
     });
@@ -66,6 +95,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   },
 
   signOut: async () => {
+    unsubscribeAccountDeletion();
     await supabase.auth.signOut();
     set({ session: null, profile: null, isProfileComplete: false });
     useSportsStore.getState().reset();

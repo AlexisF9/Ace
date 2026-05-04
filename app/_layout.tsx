@@ -50,7 +50,7 @@ export default function RootLayout() {
     if (loaded) {
       initLang()
         .then(() => initialize())
-        .then(() => SplashScreen.hideAsync());
+        .then(() => SplashScreen.hideAsync().catch(() => {}));
     }
   }, [loaded]);
 

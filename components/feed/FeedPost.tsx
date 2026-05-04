@@ -67,7 +67,8 @@ export function FeedPost({ post, onDelete, onEdit }: FeedPostProps) {
   const playerSports = (author as any)?.player_sports as
     | { sport: Sport; level: string }[]
     | undefined;
-  const level = playerSports?.find((s) => s.sport === post.sport)?.level;
+  const sportTagEntries =
+    playerSports?.map((s) => ({ sport: s.sport, level: s.level })) ?? [];
 
   const hasImages = !!(post.image_urls && post.image_urls.length > 0);
 
@@ -133,14 +134,14 @@ export function FeedPost({ post, onDelete, onEdit }: FeedPostProps) {
 
   const handleDeletePress = () => {
     setMenuVisible(false);
-    Alert.alert(
-      t("feedPost.deleteTitle"),
-      t("feedPost.deleteMessage"),
-      [
-        { text: t("common.cancel"), style: "cancel" },
-        { text: t("feedPost.deleteConfirm"), style: "destructive", onPress: onDelete },
-      ],
-    );
+    Alert.alert(t("feedPost.deleteTitle"), t("feedPost.deleteMessage"), [
+      { text: t("common.cancel"), style: "cancel" },
+      {
+        text: t("feedPost.deleteConfirm"),
+        style: "destructive",
+        onPress: onDelete,
+      },
+    ]);
   };
 
   return (
@@ -180,7 +181,7 @@ export function FeedPost({ post, onDelete, onEdit }: FeedPostProps) {
                   </Text>
                 </View>
               )}
-              <SportTag sport={post.sport} level={level} />
+              {!isClub && <SportTag entries={sportTagEntries} />}
             </View>
             <Text className="font-body text-ink-tertiary text-xs">
               {timeAgo(post.created_at, lang)}
@@ -199,7 +200,7 @@ export function FeedPost({ post, onDelete, onEdit }: FeedPostProps) {
         )}
       </View>
 
-      {/* Menu dropdown */}
+      {/* Menu actions */}
       <Modal
         visible={menuVisible}
         transparent
@@ -207,7 +208,7 @@ export function FeedPost({ post, onDelete, onEdit }: FeedPostProps) {
         onRequestClose={() => setMenuVisible(false)}
       >
         <TouchableOpacity
-          style={[StyleSheet.absoluteFillObject, styles.overlay]}
+          style={styles.overlay}
           activeOpacity={1}
           onPress={() => setMenuVisible(false)}
         >
@@ -215,7 +216,10 @@ export function FeedPost({ post, onDelete, onEdit }: FeedPostProps) {
             <View style={styles.handle} />
 
             <TouchableOpacity
-              onPress={() => { setMenuVisible(false); onEdit?.(); }}
+              onPress={() => {
+                setMenuVisible(false);
+                onEdit?.();
+              }}
               style={styles.menuItem}
             >
               <Pencil size={18} color={colors.ink} />
@@ -247,7 +251,7 @@ export function FeedPost({ post, onDelete, onEdit }: FeedPostProps) {
           </Text>
         ) : null}
 
-        {post.match && <ScorePost match={post.match} sport={post.sport} />}
+        {post.match && <ScorePost match={post.match} />}
 
         {/* Images */}
         {hasImages && (
@@ -326,6 +330,7 @@ export function FeedPost({ post, onDelete, onEdit }: FeedPostProps) {
 
 const styles = StyleSheet.create({
   overlay: {
+    flex: 1,
     backgroundColor: "rgba(0,0,0,0.35)",
     justifyContent: "flex-end",
   },

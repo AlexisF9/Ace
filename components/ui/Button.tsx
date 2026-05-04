@@ -6,7 +6,8 @@ type Variant =
   | "outline-orange"
   | "ghost"
   | "dark"
-  | "outline-white";
+  | "outline-white"
+  | "danger";
 
 interface ButtonProps {
   label: string;
@@ -17,7 +18,10 @@ interface ButtonProps {
   fullWidth?: boolean;
 }
 
-const variantStyles: Record<Variant, { container: string; text: string; spinnerColor: string }> = {
+const variantStyles: Record<
+  Variant,
+  { container: string; text: string; spinnerColor: string }
+> = {
   primary: {
     container: "bg-orange active:opacity-70",
     text: "text-white",
@@ -48,6 +52,11 @@ const variantStyles: Record<Variant, { container: string; text: string; spinnerC
     text: "text-white",
     spinnerColor: "#FFFFFF",
   },
+  danger: {
+    container: "bg-error active:opacity-70",
+    text: "text-white",
+    spinnerColor: "#D92B2B",
+  },
 };
 
 export function Button({
@@ -75,9 +84,7 @@ export function Button({
       {loading ? (
         <ActivityIndicator color={styles.spinnerColor} size="small" />
       ) : (
-        <Text className={`font-display text-sm ${styles.text}`}>
-          {label}
-        </Text>
+        <Text className={`font-display text-sm ${styles.text}`}>{label}</Text>
       )}
     </TouchableOpacity>
   );

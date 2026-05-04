@@ -3,10 +3,10 @@ import { useSportsStore } from "../../stores/sportsStore";
 import { useTranslation } from "../../hooks/useTranslation";
 
 export function FeedSportFilter() {
-  const { visibleSports, feedFilter, setFeedFilter } = useSportsStore();
+  const { visibleSports, feedFilter, setFeedFilter, activeSports } = useSportsStore();
   const { t } = useTranslation();
 
-  if (visibleSports.length <= 1) return null;
+  if (visibleSports.length <= 1 || activeSports.length >= 2) return null;
 
   return (
     <View className="flex-row bg-surface mx-4 p-1 rounded-lg gap-1 mb-3">

@@ -87,7 +87,6 @@ export interface Post {
   type: PostType;
   content?: string;
   image_urls?: string[];
-  sport: Sport;
   created_at: string;
   author?: PlayerProfile | ClubProfile;
   match?: Match;

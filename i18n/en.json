@@ -193,7 +193,7 @@
   },
   "post": {
     "title": "New post",
-    "sport": "Sport",
+
     "sets": "Score",
     "addSet": "Add a set",
     "addPhoto": "Add a photo",
@@ -208,12 +208,17 @@
     "player": "Player",
     "club": "Club",
     "signOut": "Log out",
-    "language": "Language",
-    "postsSport": "{sport} posts"
+    "postsSport": "View{sport} posts",
+    "mySports": "My sports",
+    "editProfile": "Edit profile",
+    "saveSports": "Save",
+    "cancelEdit": "Cancel",
+    "sportsMin": "At least one sport required.",
+    "sportsLevelRequired": "Select a level for each sport."
   },
   "tabs": {
     "feed": "Feed",
-    "news": "News",
+    "clubs": "Clubs",
     "publish": "Publish",
     "profile": "Profile"
   },
@@ -239,8 +244,8 @@
   "common": {
     "genericError": "An error occurred.",
     "authError": "Authentication error.",
-    "tennis": "🎾 Tennis",
-    "padel": "🏓 Padel",
+    "tennis": "Tennis",
+    "padel": "Padel",
     "cancel": "Cancel"
   }
 }

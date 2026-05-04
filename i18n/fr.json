@@ -193,7 +193,7 @@
   },
   "post": {
     "title": "Nouveau post",
-    "sport": "Sport",
+
     "sets": "Score",
     "addSet": "Ajouter un set",
     "addPhoto": "Ajouter une photo",
@@ -208,12 +208,17 @@
     "player": "Joueur",
     "club": "Club",
     "signOut": "Se déconnecter",
-    "language": "Langue",
-    "postsSport": "Posts {sport}"
+    "postsSport": "Afficher les posts {sport}",
+    "mySports": "Mes sports",
+    "editProfile": "Modifier le profil",
+    "saveSports": "Enregistrer",
+    "cancelEdit": "Annuler",
+    "sportsMin": "Au moins un sport requis.",
+    "sportsLevelRequired": "Sélectionne un niveau pour chaque sport."
   },
   "tabs": {
     "feed": "Feed",
-    "news": "Actualités",
+    "clubs": "Clubs",
     "publish": "Publier",
     "profile": "Profil"
   },
@@ -239,8 +244,8 @@
   "common": {
     "genericError": "Une erreur est survenue.",
     "authError": "Erreur d'authentification.",
-    "tennis": "🎾 Tennis",
-    "padel": "🏓 Padel",
+    "tennis": "Tennis",
+    "padel": "Padel",
     "cancel": "Annuler"
   }
 }

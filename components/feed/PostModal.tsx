@@ -13,12 +13,11 @@ import {
 import { X, Plus, ImagePlus } from "lucide-react-native";
 import { supabase, storagePathFromUrl } from "../../lib/supabase";
 import { useAuthStore } from "../../stores/authStore";
-import { useSportsStore } from "../../stores/sportsStore";
 import { usePostImages } from "../../hooks/usePostImages";
 import { usePostScore } from "../../hooks/usePostScore";
 import { useTranslation } from "../../hooks/useTranslation";
 import { Button } from "../ui/Button";
-import { Match, Post, Sport } from "../../types";
+import { Match, Post } from "../../types";
 import { colors } from "../../constants/theme";
 
 interface PostModalProps {
@@ -26,17 +25,25 @@ interface PostModalProps {
   onClose: () => void;
   post?: Post;
   onCreated: () => void;
-  onUpdated: (patch: { content: string | null; image_urls: string[]; match?: Match; match_id?: string }) => void;
+  onUpdated: (patch: {
+    content: string | null;
+    image_urls: string[];
+    match?: Match;
+    match_id?: string;
+  }) => void;
 }
 
-export function PostModal({ visible, onClose, post, onCreated, onUpdated }: PostModalProps) {
+export function PostModal({
+  visible,
+  onClose,
+  post,
+  onCreated,
+  onUpdated,
+}: PostModalProps) {
   const { session } = useAuthStore();
-  const { visibleSports } = useSportsStore();
   const { t } = useTranslation();
 
   const isEditing = !!post;
-
-  const [sport, setSport] = useState<Sport>((post?.sport ?? visibleSports[0] ?? "tennis") as Sport);
   const [content, setContent] = useState(post?.content ?? "");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -47,12 +54,11 @@ export function PostModal({ visible, onClose, post, onCreated, onUpdated }: Post
   useEffect(() => {
     if (visible) {
       setContent(post?.content ?? "");
-      setSport((post?.sport ?? visibleSports[0] ?? "tennis") as Sport);
       setError(null);
       images.reset(post?.image_urls ?? []);
       score.reset(post?.match?.score.sets);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visible, post?.id]);
 
   const hasContent = content.trim() !== "";
@@ -86,7 +92,10 @@ export function PostModal({ visible, onClose, post, onCreated, onUpdated }: Post
       const allImageUrls = await images.getFinalUrls(session.user.id);
 
       if (isEditing) {
-        const { updatedMatch, updatedMatchId } = await score.submitScore(post, session.user.id);
+        const { updatedMatch, updatedMatchId } = await score.submitScore(
+          post,
+          session.user.id,
+        );
 
         const { error: updateError } = await supabase
           .from("posts")
@@ -101,12 +110,19 @@ export function PostModal({ visible, onClose, post, onCreated, onUpdated }: Post
 
         const removedUrls = images.getRemovedUrls();
         if (removedUrls.length > 0) {
-          await supabase.storage.from("post-images").remove(
-            removedUrls.map((url) => storagePathFromUrl(url, "post-images")),
-          );
+          await supabase.storage
+            .from("post-images")
+            .remove(
+              removedUrls.map((url) => storagePathFromUrl(url, "post-images")),
+            );
         }
 
-        onUpdated({ content: hasContent ? content.trim() : null, image_urls: allImageUrls, match: updatedMatch, match_id: updatedMatchId });
+        onUpdated({
+          content: hasContent ? content.trim() : null,
+          image_urls: allImageUrls,
+          match: updatedMatch,
+          match_id: updatedMatchId,
+        });
       } else {
         let matchId: string | undefined;
 
@@ -116,8 +132,12 @@ export function PostModal({ visible, onClose, post, onCreated, onUpdated }: Post
             .insert({
               player1_id: session.user.id,
               player2_id: session.user.id,
-              sport,
-              score: { sets: score.validSets.map((s) => ({ p1: parseInt(s.p1) || 0, p2: parseInt(s.p2) || 0 })) },
+              score: {
+                sets: score.validSets.map((s) => ({
+                  p1: parseInt(s.p1) || 0,
+                  p2: parseInt(s.p2) || 0,
+                })),
+              },
               validated: false,
             })
             .select()
@@ -129,7 +149,6 @@ export function PostModal({ visible, onClose, post, onCreated, onUpdated }: Post
         const { error: postError } = await supabase.from("posts").insert({
           author_id: session.user.id,
           type: "post",
-          sport,
           ...(matchId ? { match_id: matchId } : {}),
           ...(hasContent ? { content: content.trim() } : {}),
           ...(allImageUrls.length > 0 ? { image_urls: allImageUrls } : {}),
@@ -159,7 +178,7 @@ export function PostModal({ visible, onClose, post, onCreated, onUpdated }: Post
         behavior={Platform.OS === "ios" ? "padding" : undefined}
       >
         <ScrollView
-          contentContainerClassName="px-4 pt-4"
+          contentContainerClassName="p-6"
           keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false}
         >
@@ -186,29 +205,6 @@ export function PostModal({ visible, onClose, post, onCreated, onUpdated }: Post
             {content.length}/500
           </Text>
 
-          {!isEditing && visibleSports.length > 1 && (
-            <View className="mb-5">
-              <Text className="font-display-semi text-ink-secondary text-xs mb-2">
-                {t("post.sport")}
-              </Text>
-              <View className="flex-row gap-2">
-                {visibleSports.map((s) => (
-                  <TouchableOpacity
-                    key={s}
-                    onPress={() => setSport(s)}
-                    className={`flex-1 py-2.5 rounded-md items-center border-2 ${
-                      sport === s ? "bg-orange border-orange" : "bg-white border-ink-border"
-                    }`}
-                  >
-                    <Text className={`font-display-semi text-sm ${sport === s ? "text-white" : "text-ink-secondary"}`}>
-                      {t(`common.${s}`)}
-                    </Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
-            </View>
-          )}
-
           {images.hasImages && (
             <ScrollView
               horizontal
@@ -218,7 +214,11 @@ export function PostModal({ visible, onClose, post, onCreated, onUpdated }: Post
             >
               {images.allUris.map((uri, i) => (
                 <View key={i} className="w-20 h-20 rounded-md overflow-hidden">
-                  <Image source={{ uri }} className="w-full h-full" resizeMode="cover" />
+                  <Image
+                    source={{ uri }}
+                    className="w-full h-full"
+                    resizeMode="cover"
+                  />
                   <TouchableOpacity
                     onPress={() => images.removeImage(i)}
                     className="absolute top-1 right-1 bg-ink/60 rounded-full w-5 h-5 items-center justify-center"
@@ -253,7 +253,9 @@ export function PostModal({ visible, onClose, post, onCreated, onUpdated }: Post
           {score.showScore ? (
             <View className="bg-white border border-ink-border rounded-md p-4 mb-5">
               <View className="flex-row items-center justify-between mb-3">
-                <Text className="font-display-semi text-ink text-sm">{t("post.sets")}</Text>
+                <Text className="font-display-semi text-ink text-sm">
+                  {t("post.sets")}
+                </Text>
                 <TouchableOpacity onPress={score.hideScore} className="p-1">
                   <X size={16} color="#8A8A8A" />
                 </TouchableOpacity>
@@ -288,14 +290,19 @@ export function PostModal({ visible, onClose, post, onCreated, onUpdated }: Post
                         onPress={() => score.removeSet(i)}
                         className="w-7 h-7 items-center justify-center"
                       >
-                        <Text className="font-body text-ink-tertiary text-xl leading-none">×</Text>
+                        <Text className="font-body text-ink-tertiary text-xl leading-none">
+                          ×
+                        </Text>
                       </TouchableOpacity>
                     )}
                   </View>
                 ))}
               </View>
               {score.sets.length < 5 && (
-                <TouchableOpacity onPress={score.addSet} className="mt-3 items-center py-2">
+                <TouchableOpacity
+                  onPress={score.addSet}
+                  className="mt-3 items-center py-2"
+                >
                   <Text className="font-display-semi text-ink-secondary text-sm">
                     + {t("post.addSet")}
                   </Text>
@@ -315,7 +322,9 @@ export function PostModal({ visible, onClose, post, onCreated, onUpdated }: Post
           )}
 
           {error && (
-            <Text className="font-body text-xs text-error mb-4 text-center">{error}</Text>
+            <Text className="font-body text-xs text-error mb-4 text-center">
+              {error}
+            </Text>
           )}
 
           <Button

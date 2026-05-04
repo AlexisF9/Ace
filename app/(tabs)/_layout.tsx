@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Tabs } from "expo-router";
-import { Home, Newspaper, User } from "lucide-react-native";
+import { Home, Building2, User } from "lucide-react-native";
 import { colors } from "../../constants/theme";
 import { useAuthStore } from "../../stores/authStore";
 import { useSportsStore } from "../../stores/sportsStore";
@@ -48,11 +48,11 @@ export default function TabsLayout() {
           }}
         />
         <Tabs.Screen
-          name="news"
+          name="clubs"
           options={{
-            title: t("tabs.news"),
+            title: t("tabs.clubs"),
             tabBarIcon: ({ color, size }) => (
-              <Newspaper color={color} size={size} strokeWidth={1.75} />
+              <Building2 color={color} size={size} strokeWidth={1.75} />
             ),
           }}
         />

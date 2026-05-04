@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { supabase } from "../lib/supabase";
+import { useSportsStore } from "../stores/sportsStore";
 import { Match, Post } from "../types";
 
 interface SetScore {
@@ -8,6 +9,7 @@ interface SetScore {
 }
 
 export function usePostScore() {
+  const { activeSports } = useSportsStore();
   const [showScore, setShowScore] = useState(false);
   const [sets, setSets] = useState<SetScore[]>([{ p1: "", p2: "" }]);
 
@@ -63,7 +65,7 @@ export function usePostScore() {
         .insert({
           player1_id: userId,
           player2_id: userId,
-          sport: post.sport,
+          sport: post.match?.sport ?? activeSports[0] ?? "tennis",
           score: { sets: parsedSets },
           validated: false,
         })

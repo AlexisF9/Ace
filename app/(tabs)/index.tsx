@@ -13,7 +13,7 @@ import { Plus } from "lucide-react-native";
 import { useFeed } from "../../hooks/useFeed";
 import { FeedPost } from "../../components/feed/FeedPost";
 import { PostModal } from "../../components/feed/PostModal";
-import { FeedSportFilter } from "../../components/common/FeedSportFilter";
+
 import { Post } from "../../types";
 import { colors } from "../../constants/theme";
 import { useTranslation } from "../../hooks/useTranslation";
@@ -119,7 +119,6 @@ export default function FeedScreen() {
                 <Plus size={18} color="#fff" strokeWidth={2.5} />
               </TouchableOpacity>
             </View>
-            <FeedSportFilter />
           </View>
         }
         ListEmptyComponent={<EmptyFeed />}
@@ -144,9 +143,18 @@ export default function FeedScreen() {
         visible={modalVisible}
         onClose={handleClose}
         post={editingPost}
-        onCreated={() => { handleClose(); refresh(); }}
+        onCreated={() => {
+          handleClose();
+          refresh();
+        }}
         onUpdated={({ content, image_urls, match, match_id }) => {
-          if (editingPost) updatePost(editingPost.id, { content: content ?? undefined, image_urls, match, match_id });
+          if (editingPost)
+            updatePost(editingPost.id, {
+              content: content ?? undefined,
+              image_urls,
+              match,
+              match_id,
+            });
           handleClose();
         }}
       />
